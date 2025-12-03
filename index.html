@@ -66,6 +66,13 @@
             border-radius: 8px;
             border: 1px solid #ccc;
         }
+        .review-card {
+            border-bottom: 1px solid #ddd;
+            padding: 8px 0;
+        }
+        .review-card:last-child {
+            border-bottom: none;
+        }
     </style>
 </head>
 <body>
@@ -81,7 +88,7 @@
     <div id="search-results"></div>
 
     <!-- FORM SECTION -->
-    <form>
+    <form id="review-form">
         <label for="school-name">School Name:</label>
         <input type="text" id="school-name" name="school" required>
 
@@ -116,16 +123,93 @@
 
     <!-- JAVASCRIPT SECTION -->
     <script>
-        document.getElementById('search-school').addEventListener('input', function() {
-            const query = this.value.toLowerCase();
+        // In-memory list of reviews (sample + anything users add this session)
+        const reviews = [
+            {
+                school: "Peck Elementary School",
+                principal: "Ashley Triplett",
+                rating: "B",
+                principalComments: "The principal is very supportive and listens to student concerns.",
+                schoolComments: "The school climate is positive, but extracurricular options are limited."
+            }
+        ];
 
-            // Placeholder live feedback
-            if (query.trim() === "") {
-                document.getElementById('search-results').innerHTML = "";
-            } else {
-                document.getElementById('search-results').innerHTML =
-                    "<strong>Searching for:</strong> " + query +
-                    "<br><em>(This is where matching reviews will appear.)</em>";
+        const form = document.getElementById('review-form');
+        const searchInput = document.getElementById('search-school');
+        const resultsDiv = document.getElementById('search-results');
+
+        // Helper: render a list of reviews to the page
+        function renderResults(list, query) {
+            resultsDiv.innerHTML = "";
+
+            if (!query || query.trim() === "") {
+                return;
+            }
+
+            if (list.length === 0) {
+                resultsDiv.innerHTML = "<p>No reviews found for that school yet.</p>";
+                return;
+            }
+
+            list.forEach(review => {
+                const div = document.createElement('div');
+                div.className = "review-card";
+                div.innerHTML = `
+                    <h3>${review.school}</h3>
+                    <p><strong>Principal:</strong> ${review.principal}</p>
+                    <p><strong>Rating:</strong> ${review.rating}</p>
+                    <p><strong>Comments about Principal:</strong> ${review.principalComments || "N/A"}</p>
+                    <p><strong>Comments about School:</strong> ${review.schoolComments || "N/A"}</p>
+                `;
+                resultsDiv.appendChild(div);
+            });
+        }
+
+        // When someone types in the search box
+        searchInput.addEventListener('input', function () {
+            const query = this.value.toLowerCase().trim();
+            const filtered = reviews.filter(review =>
+                review.school.toLowerCase().includes(query)
+            );
+            renderResults(filtered, query);
+        });
+
+        // When someone submits the form, add a new review (for this session)
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const school = document.getElementById('school-name').value.trim();
+            const principal = document.getElementById('principal-name').value.trim();
+            const rating = document.getElementById('rating').value;
+            const principalComments = document.getElementById('principal-comments').value.trim();
+            const schoolComments = document.getElementById('school-comments').value.trim();
+
+            if (!school || !principal) {
+                alert("Please fill in at least the school name and principal name.");
+                return;
+            }
+
+            // Add to in-memory reviews
+            reviews.push({
+                school,
+                principal,
+                rating,
+                principalComments,
+                schoolComments
+            });
+
+            // Clear the form
+            form.reset();
+
+            alert("Thank you for your review!");
+
+            // If they're currently searching for this school, update results
+            const currentQuery = searchInput.value.toLowerCase().trim();
+            if (currentQuery && school.toLowerCase().includes(currentQuery)) {
+                const filtered = reviews.filter(review =>
+                    review.school.toLowerCase().includes(currentQuery)
+                );
+                renderResults(filtered, currentQuery);
             }
         });
     </script>
