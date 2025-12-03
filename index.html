@@ -1,44 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <title>Rate My Principal</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
+            background-color: #f2f2f2;
+        }
+        h1, p {
+            text-align: center;
         }
         form {
-           <body>
-    <h1>Welcome to Rate My Principal</h1>
-    <p>This is a simple site to rate principals and schools.</p>
-    <form>
-        <label for="school-name">School Name:</label>
-        <input type="text" id="school-name" name="school" required>
-
-        <label for="principal-name">Principal Name:</label>
-        <input type="text" id="principal-name" name="principal" required>
-
-        <label for="rating">Rating:</label>
-        <select id="rating" name="rating">
-            <option value="A">A</option>
-            <option value="B">B</option>
-            <option value="C">C</option>
-            <option value="D">D</option>
-            <option value="F">F</option>
-        </select>
-
-        <label for="principal-comments">Comments about Principal:</label>
-        <textarea id="principal-comments" name="principal_comments" placeholder="For example: The principal is very supportive and listens to student concerns."></textarea>
-
-        <label for="school-comments">Comments about School:</label>
-        <textarea id="school-comments" name="school_comments" placeholder="For example: The school has great facilities, but could improve its extracurricular activities."></textarea>
-
-        <button type="submit">Submit</button>
-    </form>
-</body>
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #ffffff;
         }
         label {
             display: block;
             margin-top: 10px;
+            font-weight: bold;
         }
         input[type="text"], select, textarea {
             width: 100%;
@@ -48,44 +33,58 @@
             border-radius: 4px;
             box-sizing: border-box;
         }
+        textarea {
+            min-height: 80px;
+        }
         button {
             margin-top: 15px;
             padding: 10px 15px;
-            background-color: #007bff; /* This is the blue color for the button */
+            background-color: #007bff;
             color: white;
             border: none;
             border-radius: 4px;
             cursor: pointer;
         }
         button:hover {
-            background-color: #0056b3; /* A darker blue on hover */
+            background-color: #0056b3;
         }
     </style>
-</head>
-
-    <title>My Rating Site</title>
 </head>
 <body>
     <h1>Welcome to Rate My Principal</h1>
     <p>This is a simple site to rate principals and schools.</p>
+
+    <form>
+        <label for="school-name">School Name:</label>
+        <input type="text" id="school-name" name="school" required>
+
+        <label for="principal-name">Principal Name:</label>
+        <input type="text" id="principal-name" name="principal" required>
+
+        <label for="rating">Rating (Letter Grade):</label>
+        <select id="rating" name="rating">
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+            <option value="F">F</option>
+        </select>
+
+        <label for="principal-comments">Comments about Principal:</label>
+        <textarea
+            id="principal-comments"
+            name="principal_comments"
+            placeholder="For example: The principal is very supportive, communicates clearly, and handles discipline fairly."
+        ></textarea>
+
+        <label for="school-comments">Comments about School:</label>
+        <textarea
+            id="school-comments"
+            name="school_comments"
+            placeholder="For example: The school climate is positive, teachers are collaborative, but communication with families could improve."
+        ></textarea>
+
+        <button type="submit">Submit</button>
+    </form>
 </body>
 </html>
-<form>
-    <label for="principal-name">Principal Name:</label>
-    <input type="text" id="principal-name" name="principal" required>
-
-    <label for="rating">Rating:</label>
-    <select id="rating" name="rating">
-        <option value="A">A</option>
-        <option value="B">B</option>
-        <option value="C">C</option>
-        <option value="D">D</option>
-        <option value="F">F</option>
-    </select>
-
-    <label for="comments">Comments:</label>
-    <textarea id="comments" name="comments"></textarea>
-
-    <button type="submit">Submit</button>
-</form>
-<head>
