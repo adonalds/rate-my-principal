@@ -48,12 +48,39 @@
         button:hover {
             background-color: #0056b3;
         }
+
+        /* Search section styling */
+        .search-box {
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 15px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+        #search-results {
+            max-width: 500px;
+            margin: 10px auto;
+            padding: 10px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
     </style>
 </head>
 <body>
     <h1>Welcome to Rate My Principal</h1>
     <p>This is a simple site to rate principals and schools.</p>
 
+    <!-- SEARCH BAR SECTION -->
+    <div class="search-box">
+        <label for="search-school">Search for a School:</label>
+        <input type="text" id="search-school" placeholder="Enter school name...">
+    </div>
+
+    <div id="search-results"></div>
+
+    <!-- FORM SECTION -->
     <form>
         <label for="school-name">School Name:</label>
         <input type="text" id="school-name" name="school" required>
@@ -86,5 +113,21 @@
 
         <button type="submit">Submit</button>
     </form>
+
+    <!-- JAVASCRIPT SECTION -->
+    <script>
+        document.getElementById('search-school').addEventListener('input', function() {
+            const query = this.value.toLowerCase();
+
+            // Placeholder live feedback
+            if (query.trim() === "") {
+                document.getElementById('search-results').innerHTML = "";
+            } else {
+                document.getElementById('search-results').innerHTML =
+                    "<strong>Searching for:</strong> " + query +
+                    "<br><em>(This is where matching reviews will appear.)</em>";
+            }
+        });
+    </script>
 </body>
 </html>
