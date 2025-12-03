@@ -89,8 +89,15 @@
 
     <!-- FORM SECTION -->
     <form id="review-form">
+
         <label for="school-name">School Name:</label>
         <input type="text" id="school-name" name="school" required>
+
+        <label for="county">County:</label>
+        <input type="text" id="county" name="county" required>
+
+        <label for="state">State:</label>
+        <input type="text" id="state" name="state" required>
 
         <label for="principal-name">Principal Name:</label>
         <input type="text" id="principal-name" name="principal" required>
@@ -127,6 +134,8 @@
         const reviews = [
             {
                 school: "Peck Elementary School",
+                county: "Guilford County",
+                state: "North Carolina",
                 principal: "Ashley Triplett",
                 rating: "B",
                 principalComments: "The principal is very supportive and listens to student concerns.",
@@ -138,13 +147,11 @@
         const searchInput = document.getElementById('search-school');
         const resultsDiv = document.getElementById('search-results');
 
-        // Helper: render a list of reviews to the page
+        // Helper: render a list of reviews
         function renderResults(list, query) {
             resultsDiv.innerHTML = "";
 
-            if (!query || query.trim() === "") {
-                return;
-            }
+            if (!query || query.trim() === "") return;
 
             if (list.length === 0) {
                 resultsDiv.innerHTML = "<p>No reviews found for that school yet.</p>";
@@ -155,7 +162,7 @@
                 const div = document.createElement('div');
                 div.className = "review-card";
                 div.innerHTML = `
-                    <h3>${review.school}</h3>
+                    <h3>${review.school} (${review.county}, ${review.state})</h3>
                     <p><strong>Principal:</strong> ${review.principal}</p>
                     <p><strong>Rating:</strong> ${review.rating}</p>
                     <p><strong>Comments about Principal:</strong> ${review.principalComments || "N/A"}</p>
@@ -165,7 +172,7 @@
             });
         }
 
-        // When someone types in the search box
+        // SEARCH
         searchInput.addEventListener('input', function () {
             const query = this.value.toLowerCase().trim();
             const filtered = reviews.filter(review =>
@@ -174,11 +181,13 @@
             renderResults(filtered, query);
         });
 
-        // When someone submits the form, add a new review (for this session)
+        // FORM SUBMISSION
         form.addEventListener('submit', function (event) {
             event.preventDefault();
 
             const school = document.getElementById('school-name').value.trim();
+            const county = document.getElementById('county').value.trim();
+            const state = document.getElementById('state').value.trim();
             const principal = document.getElementById('principal-name').value.trim();
             const rating = document.getElementById('rating').value;
             const principalComments = document.getElementById('principal-comments').value.trim();
@@ -189,21 +198,21 @@
                 return;
             }
 
-            // Add to in-memory reviews
+            // Add to reviews
             reviews.push({
                 school,
+                county,
+                state,
                 principal,
                 rating,
                 principalComments,
                 schoolComments
             });
 
-            // Clear the form
             form.reset();
-
             alert("Thank you for your review!");
 
-            // If they're currently searching for this school, update results
+            // Refresh results if user is currently searching
             const currentQuery = searchInput.value.toLowerCase().trim();
             if (currentQuery && school.toLowerCase().includes(currentQuery)) {
                 const filtered = reviews.filter(review =>
