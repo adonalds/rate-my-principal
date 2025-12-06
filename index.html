@@ -89,6 +89,13 @@
     </style>
 </head>
 <body>
+
+    <!-- NAVIGATION BAR -->
+    <div class="nav" style="max-width: 800px; margin: 0 auto 15px auto; text-align: left;">
+        <a href="index.html" style="margin-right: 12px; text-decoration: none; color: #0056b3; font-weight: bold;">Home</a>
+        <a href="about.html" style="margin-right: 12px; text-decoration: none; color: #0056b3; font-weight: bold;">About</a>
+    </div>
+
     <h1>Welcome to Rate My Principal</h1>
     <p>This is a simple site to rate principals and schools.</p>
 
@@ -157,7 +164,6 @@
 
     <!-- JAVASCRIPT SECTION -->
     <script>
-        // In-memory list of reviews (sample + anything users add this session)
         const reviews = [
             {
                 school: "Peck Elementary School",
@@ -174,7 +180,6 @@
         const searchInput = document.getElementById('search-school');
         const resultsDiv = document.getElementById('search-results');
 
-        // Helper: render a list of reviews
         function renderResults(list, query) {
             resultsDiv.innerHTML = "";
 
@@ -199,7 +204,6 @@
             });
         }
 
-        // SEARCH
         searchInput.addEventListener('input', function () {
             const query = this.value.toLowerCase().trim();
             const filtered = reviews.filter(review =>
@@ -208,7 +212,6 @@
             renderResults(filtered, query);
         });
 
-        // FORM SUBMISSION
         form.addEventListener('submit', function (event) {
             event.preventDefault();
 
@@ -225,7 +228,6 @@
                 return;
             }
 
-            // Add to reviews
             reviews.push({
                 school,
                 county,
@@ -239,7 +241,6 @@
             form.reset();
             alert("Thank you for your review!");
 
-            // Refresh results if user is currently searching
             const currentQuery = searchInput.value.toLowerCase().trim();
             if (currentQuery && school.toLowerCase().includes(currentQuery)) {
                 const filtered = reviews.filter(review =>
