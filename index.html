@@ -49,7 +49,7 @@
             background-color: #0056b3;
         }
 
-        /* Search section styling */
+        /* Search Section */
         .search-box {
             max-width: 500px;
             margin: 20px auto;
@@ -83,17 +83,27 @@
         .inline-row .field {
             flex: 1;
         }
-        .inline-row .field label {
-            margin-top: 0;
+
+        /* Navigation Bar */
+        .nav a {
+            text-decoration: none;
+            color: #0056b3;
+            font-weight: bold;
+            margin-right: 12px;
+        }
+        .nav {
+            max-width: 800px;
+            margin: 0 auto 15px auto;
+            text-align: left;
         }
     </style>
 </head>
 <body>
 
-    <!-- NAVIGATION BAR -->
-    <div class="nav" style="max-width: 800px; margin: 0 auto 15px auto; text-align: left;">
-        <a href="index.html" style="margin-right: 12px; text-decoration: none; color: #0056b3; font-weight: bold;">Home</a>
-        <a href="about.html" style="margin-right: 12px; text-decoration: none; color: #0056b3; font-weight: bold;">About</a>
+    <!-- NAVIGATION -->
+    <div class="nav">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
     </div>
 
     <h1>Welcome to Rate My Principal</h1>
@@ -108,15 +118,16 @@
     <div id="search-results"></div>
 
     <!-- DISCLAIMER -->
-    <p style="max-width: 500px; margin: 0 auto 20px auto; background-color:#fff3cd; padding:12px; border:1px solid #ffeeba; border-radius:6px; font-size:14px;">
+    <p style="max-width: 500px; margin: 0 auto 20px auto; 
+             background-color:#fff3cd; padding:12px; 
+             border:1px solid #ffeeba; border-radius:6px; font-size:14px;">
         <strong>Reminder:</strong> Please do not include any personal details that could identify you or others. 
         Keep comments general and professional. Reviews are public and anonymous only if you keep them anonymous.
     </p>
 
-    <!-- FORM HEADER -->
     <h2 style="text-align:center; margin-top:20px;">Submit a Review</h2>
 
-    <!-- FORM SECTION -->
+    <!-- FORM -->
     <form id="review-form">
 
         <label for="school-name">School Name:</label>
@@ -162,19 +173,10 @@
         <button type="submit">Submit</button>
     </form>
 
-    <!-- JAVASCRIPT SECTION -->
+    <!-- JAVASCRIPT -->
     <script>
-        const reviews = [
-            {
-                school: "Peck Elementary School",
-                county: "Guilford County",
-                state: "North Carolina",
-                principal: "Ashley Triplett",
-                rating: "B",
-                principalComments: "The principal is very supportive and listens to student concerns.",
-                schoolComments: "The school climate is positive, but extracurricular options are limited."
-            }
-        ];
+        // EMPTY array — no preloaded schools or principals
+        const reviews = [];
 
         const form = document.getElementById('review-form');
         const searchInput = document.getElementById('search-school');
@@ -182,7 +184,6 @@
 
         function renderResults(list, query) {
             resultsDiv.innerHTML = "";
-
             if (!query || query.trim() === "") return;
 
             if (list.length === 0) {
