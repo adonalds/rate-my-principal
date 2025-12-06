@@ -7,7 +7,7 @@
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
-            background-color: #f2f2f2;
+            background: linear-gradient(to bottom right, #e9f1ff, #ffffff);
         }
         h1, p {
             text-align: center;
@@ -73,6 +73,19 @@
         .review-card:last-child {
             border-bottom: none;
         }
+
+        /* County/State inline layout */
+        .inline-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .inline-row .field {
+            flex: 1;
+        }
+        .inline-row .field label {
+            margin-top: 0;
+        }
     </style>
 </head>
 <body>
@@ -87,17 +100,31 @@
 
     <div id="search-results"></div>
 
+    <!-- DISCLAIMER -->
+    <p style="max-width: 500px; margin: 0 auto 20px auto; background-color:#fff3cd; padding:12px; border:1px solid #ffeeba; border-radius:6px; font-size:14px;">
+        <strong>Reminder:</strong> Please do not include any personal details that could identify you or others. 
+        Keep comments general and professional. Reviews are public and anonymous only if you keep them anonymous.
+    </p>
+
+    <!-- FORM HEADER -->
+    <h2 style="text-align:center; margin-top:20px;">Submit a Review</h2>
+
     <!-- FORM SECTION -->
     <form id="review-form">
 
         <label for="school-name">School Name:</label>
         <input type="text" id="school-name" name="school" required>
 
-        <label for="county">County:</label>
-        <input type="text" id="county" name="county" required>
-
-        <label for="state">State:</label>
-        <input type="text" id="state" name="state" required>
+        <div class="inline-row">
+            <div class="field">
+                <label for="county">County:</label>
+                <input type="text" id="county" name="county" required>
+            </div>
+            <div class="field">
+                <label for="state">State:</label>
+                <input type="text" id="state" name="state" required>
+            </div>
+        </div>
 
         <label for="principal-name">Principal Name:</label>
         <input type="text" id="principal-name" name="principal" required>
