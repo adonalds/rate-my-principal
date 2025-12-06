@@ -74,6 +74,23 @@
             border-bottom: none;
         }
 
+        /* Report button row inside each review */
+        .review-actions {
+            margin-top: 6px;
+        }
+        .report-btn {
+            background-color: #dc3545;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        .report-btn:hover {
+            background-color: #b02a37;
+        }
+
         /* County/State inline layout */
         .inline-row {
             display: flex;
@@ -201,11 +218,17 @@
                     <p><strong>Rating:</strong> ${review.rating}</p>
                     <p><strong>Comments about Principal:</strong> ${review.principalComments || "N/A"}</p>
                     <p><strong>Comments about School:</strong> ${review.schoolComments || "N/A"}</p>
+                    <div class="review-actions">
+                        <button type="button" class="report-btn" data-school="${review.school}">
+                            Report Review
+                        </button>
+                    </div>
                 `;
                 resultsDiv.appendChild(div);
             });
         }
 
+        // Handle typing in the search box
         searchInput.addEventListener('input', function () {
             const query = this.value.toLowerCase().trim();
             const filtered = reviews.filter(review =>
@@ -214,6 +237,7 @@
             renderResults(filtered, query);
         });
 
+        // Handle form submission (adding a new review)
         form.addEventListener('submit', function (event) {
             event.preventDefault();
 
@@ -249,6 +273,26 @@
                     review.school.toLowerCase().includes(currentQuery)
                 );
                 renderResults(filtered, currentQuery);
+            }
+        });
+
+        // Handle "Report Review" clicks (simple popup for now)
+        resultsDiv.addEventListener('click', function (event) {
+            if (event.target.classList.contains('report-btn')) {
+                const schoolName = event.target.getAttribute('data-school') || "this school";
+                const reason = prompt(
+                    `You are reporting a review for ${schoolName}.\n\n` +
+                    "Briefly explain why you are reporting this review:"
+                );
+
+                if (reason && reason.trim() !== "") {
+                    alert(
+                        "Thank you. Reporting is not fully active yet, " +
+                        "but this information would be used in a future version to flag reviews for review."
+                    );
+                } else {
+                    alert("Report cancelled. No information was submitted.");
+                }
             }
         });
     </script>
