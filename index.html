@@ -49,7 +49,7 @@
             background-color: #0056b3;
         }
 
-        /* Search Section */
+        /* Search + Sort Section */
         .search-box {
             max-width: 500px;
             margin: 20px auto;
@@ -58,6 +58,27 @@
             border-radius: 8px;
             border: 1px solid #ccc;
         }
+        .search-row {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .search-row label {
+            margin-top: 0;
+        }
+        .sort-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+        .sort-row select {
+            width: auto;
+            min-width: 160px;
+            padding: 5px;
+            font-size: 14px;
+        }
+
         #search-results {
             max-width: 500px;
             margin: 10px auto;
@@ -74,7 +95,7 @@
             border-bottom: none;
         }
 
-        /* Report button row inside each review */
+        /* Report button row */
         .review-actions {
             margin-top: 6px;
         }
@@ -127,10 +148,24 @@
     <h1>Welcome to Rate My Principal</h1>
     <p>This is a simple site to rate principals and schools.</p>
 
-    <!-- SEARCH BAR SECTION -->
+    <!-- SEARCH + SORT SECTION -->
     <div class="search-box">
-        <label for="search-school">Search for a School:</label>
-        <input type="text" id="search-school" placeholder="Enter school name...">
+        <div class="search-row">
+            <div>
+                <label for="search-school">Search for a School:</label>
+                <input type="text" id="search-school" placeholder="Enter school name...">
+            </div>
+
+            <div class="sort-row">
+                <span>Sort by:</span>
+                <select id="sort-order">
+                    <option value="newest">Newest first</option>
+                    <option value="oldest">Oldest first</option>
+                    <option value="highest">Highest rating</option>
+                    <option value="lowest">Lowest rating</option>
+                </select>
+            </div>
+        </div>
     </div>
 
     <div id="search-results"></div>
@@ -193,12 +228,31 @@
 
     <!-- JAVASCRIPT -->
     <script>
-        // EMPTY array — no preloaded schools or principals
+        // In-memory review storage
         const reviews = [];
 
         const form = document.getElementById('review-form');
         const searchInput = document.getElementById('search-school');
+        const sortSelect = document.getElementById('sort-order');
         const resultsDiv = document.getElementById('search-results');
+
+        const ratingValue = { A: 4, B: 3, C: 2, D: 1, F: 0 };
+
+        function sortReviews(list, sortOption) {
+            const sorted = [...list];
+
+            if (sortOption === 'newest') {
+                sorted.sort((a, b) => b.createdAt - a.createdAt);
+            } else if (sortOption === 'oldest') {
+                sorted.sort((a, b) => a.createdAt - b.createdAt);
+            } else if (sortOption === 'highest') {
+                sorted.sort((a, b) => (ratingValue[b.rating] || 0) - (ratingValue[a.rating] || 0));
+            } else if (sortOption === 'lowest') {
+                sorted.sort((a, b) => (ratingValue[a.rating] || 0) - (ratingValue[b.rating] || 0));
+            }
+
+            return sorted;
+        }
 
         function renderResults(list, query) {
             resultsDiv.innerHTML = "";
@@ -209,7 +263,9 @@
                 return;
             }
 
-            list.forEach(review => {
+            const sorted = sortReviews(list, sortSelect.value);
+
+            sorted.forEach(review => {
                 const div = document.createElement('div');
                 div.className = "review-card";
                 div.innerHTML = `
@@ -228,16 +284,21 @@
             });
         }
 
-        // Handle typing in the search box
-        searchInput.addEventListener('input', function () {
-            const query = this.value.toLowerCase().trim();
+        function updateResults() {
+            const query = searchInput.value.toLowerCase().trim();
             const filtered = reviews.filter(review =>
                 review.school.toLowerCase().includes(query)
             );
             renderResults(filtered, query);
-        });
+        }
 
-        // Handle form submission (adding a new review)
+        // Search input
+        searchInput.addEventListener('input', updateResults);
+
+        // Sort change
+        sortSelect.addEventListener('change', updateResults);
+
+        // Form submission (add review)
         form.addEventListener('submit', function (event) {
             event.preventDefault();
 
@@ -261,22 +322,17 @@
                 principal,
                 rating,
                 principalComments,
-                schoolComments
+                schoolComments,
+                createdAt: Date.now()
             });
 
             form.reset();
             alert("Thank you for your review!");
 
-            const currentQuery = searchInput.value.toLowerCase().trim();
-            if (currentQuery && school.toLowerCase().includes(currentQuery)) {
-                const filtered = reviews.filter(review =>
-                    review.school.toLowerCase().includes(currentQuery)
-                );
-                renderResults(filtered, currentQuery);
-            }
+            updateResults();
         });
 
-        // Handle "Report Review" clicks (simple popup for now)
+        // Report Review click handler
         resultsDiv.addEventListener('click', function (event) {
             if (event.target.classList.contains('report-btn')) {
                 const schoolName = event.target.getAttribute('data-school') || "this school";
