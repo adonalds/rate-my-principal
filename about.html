@@ -9,6 +9,17 @@
             margin: 20px;
             background: linear-gradient(to bottom right, #e9f1ff, #ffffff);
         }
+        .nav {
+            max-width: 800px;
+            margin: 0 auto 15px auto;
+            text-align: left;
+        }
+        .nav a {
+            text-decoration: none;
+            color: #0056b3;
+            font-weight: bold;
+            margin-right: 12px;
+        }
         .page-container {
             max-width: 800px;
             margin: 0 auto;
@@ -18,28 +29,10 @@
             padding: 20px 25px 30px 25px;
         }
         h1, h2, h3 {
-            text-align: left;
             margin-top: 0;
         }
-        p {
+        p, li {
             line-height: 1.5;
-        }
-        ul {
-            line-height: 1.5;
-        }
-        .nav {
-            max-width: 800px;
-            margin: 0 auto 15px auto;
-            text-align: left;
-        }
-        .nav a {
-            margin-right: 12px;
-            text-decoration: none;
-            color: #0056b3;
-            font-weight: bold;
-        }
-        .nav a:hover {
-            text-decoration: underline;
         }
         .notice-box {
             background-color:#fff3cd;
@@ -49,11 +42,14 @@
             font-size:14px;
             margin: 15px 0;
         }
+        .section {
+            margin-bottom: 18px;
+        }
     </style>
 </head>
 <body>
 
-    <!-- Simple nav -->
+    <!-- NAV -->
     <div class="nav">
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
@@ -61,90 +57,111 @@
 
     <div class="page-container">
         <h1>About Rate My Principal</h1>
-        <p>
-            Rate My Principal is a simple, anonymous place for <strong>teachers and school staff</strong>
-            to share honest feedback about school leadership and school climate.
-        </p>
 
-        <h2>Who This Site Is For</h2>
-        <p>
-            This site is designed primarily for:
-        </p>
-        <ul>
-            <li>Teachers</li>
-            <li>Support staff and other school employees</li>
-        </ul>
-        <p>
-            The goal is to help educators understand what it is like to work under a particular principal
-            and within a particular school environment.
-        </p>
-
-        <h2>What You Can Review</h2>
-        <p>You can share feedback about:</p>
-        <ul>
-            <li>The principal’s leadership, communication, and decision-making</li>
-            <li>The overall school climate and culture</li>
-            <li>How supported staff feel in their roles</li>
-        </ul>
-
-        <div class="notice-box">
-            <strong>Important:</strong> Do <u>not</u> include any details that could identify you
-            or another individual. Keep comments general and professional.
+        <div class="section">
+            <p>
+                Rate My Principal is a simple, anonymous place for <strong>teachers and school staff</strong>
+                to share honest feedback about school leadership and school climate.
+            </p>
+            <p>
+                The goal is to help educators understand what it is like to work under a particular principal
+                and within a particular school environment.
+            </p>
         </div>
 
-        <h2>Anonymity and Privacy</h2>
-        <p>
-            Reviews on this site are meant to be anonymous. The site does not ask for your name,
-            email address, or any login information. However, your anonymity also depends on
-            what you choose to write.
-        </p>
-        <p>Please avoid:</p>
-        <ul>
-            <li>Stating your exact role if it makes you easily identifiable (for example, “the only 7th grade science teacher”)</li>
-            <li>Mentioning specific classrooms, years, or other details that clearly point to you</li>
-            <li>Including phone numbers, email addresses, or other personal contact information</li>
-        </ul>
+        <div class="section">
+            <h2>Who This Site Is For</h2>
+            <p>This site is intended primarily for:</p>
+            <ul>
+                <li>Teachers</li>
+                <li>Support staff and other school employees</li>
+            </ul>
+            <p>
+                A separate space for parents may be added in the future, but this version is focused on
+                the experience of staff working in the building every day.
+            </p>
+        </div>
 
-        <h2>What to Write (and What Not to Write)</h2>
-        <h3>Helpful examples:</h3>
-        <ul>
-            <li>“The principal communicates expectations clearly and is visible in the building.”</li>
-            <li>“Discipline policies are inconsistent and staff are often left out of the loop.”</li>
-            <li>“The school climate is generally positive, but staff morale has declined over the last few years.”</li>
-        </ul>
+        <div class="section">
+            <h2>What This Site Is (and Is Not)</h2>
+            <p>This site <strong>is</strong>:</p>
+            <ul>
+                <li>A place to share honest opinions about leadership and school climate</li>
+                <li>A way to gather staff perspectives in one place</li>
+                <li>A tool to help educators make more informed choices</li>
+            </ul>
+            <p>This site is <strong>not</strong>:</p>
+            <ul>
+                <li>An official rating from any school district or government agency</li>
+                <li>A place to make threats, harass people, or spread hate</li>
+                <li>A place to post private information about staff, students, or families</li>
+                <li>A place to report emergencies or immediate safety concerns</li>
+            </ul>
+        </div>
 
-        <h3>Please do not include:</h3>
-        <ul>
-            <li>Threats or abusive language</li>
-            <li>Accusations of illegal activity</li>
-            <li>Personal attacks on other staff members, students, or families</li>
-            <li>Names of other teachers or students</li>
-        </ul>
+        <div class="section">
+            <h2>Anonymity and Privacy</h2>
+            <div class="notice-box">
+                <strong>Important:</strong> Reviews are anonymous only if <em>you</em> keep them anonymous.
+                The site does not ask for your name or email, but what you write could still identify you.
+            </div>
+            <p>To protect your privacy, please avoid:</p>
+            <ul>
+                <li>Describing yourself in a way that clearly points to one person (for example, “the only 7th grade science teacher in the building”).</li>
+                <li>Listing exact years and roles if they make you obviously identifiable.</li>
+                <li>Including phone numbers, email addresses, or other contact information.</li>
+                <li>Naming other teachers, staff members, students, or families in your comments.</li>
+            </ul>
+        </div>
 
-        <h2>How Reviews Are Displayed</h2>
-        <p>
-            When you submit a review, it is tied to the school name, county, state, and principal name
-            that you enter. Over time, this will help educators:
-        </p>
-        <ul>
-            <li>Search for a specific school and see feedback left by other staff</li>
-            <li>Compare overall impressions of leadership and school climate</li>
-        </ul>
+        <div class="section">
+            <h2>What to Write</h2>
+            <p>Helpful reviews focus on <strong>patterns and behaviors</strong>, not personal attacks. For example:</p>
+            <ul>
+                <li>“The principal communicates expectations clearly and is visible in the building.”</li>
+                <li>“Staff input is sometimes requested, but decisions often feel top-down.”</li>
+                <li>“The school climate is generally positive, but staff morale has declined over the last few years.”</li>
+            </ul>
+        </div>
 
-        <h2>Content and Moderation</h2>
-        <p>
-            All content on this site is user-submitted. The site itself does not verify, endorse,
-            or fact-check individual reviews. If a review is reported or clearly violates the guidelines
-            above, it may be edited or removed at the site owner’s discretion.
-        </p>
-        <p>
-            By using this site, you agree to share feedback responsibly and respectfully.
-        </p>
+        <div class="section">
+            <h2>What Not to Write</h2>
+            <p>Please do <strong>not</strong> post:</p>
+            <ul>
+                <li>Threats, harassment, or abusive language</li>
+                <li>Slurs or hate speech</li>
+                <li>Accusations of illegal activity</li>
+                <li>Private information about specific staff, students, or families</li>
+                <li>Full names of teachers or students who are <em>not</em> the principal being reviewed</li>
+            </ul>
+            <p>
+                Reviews that clearly violate these guidelines may be removed if moderation tools are added in the future.
+            </p>
+        </div>
 
-        <p style="margin-top:25px; font-size:14px; color:#555;">
-            If you believe a review clearly violates these guidelines, please reach out with the school name,
-            principal name, and a brief description so it can be reviewed.
-        </p>
+        <div class="section">
+            <h2>Can Someone Figure Out Who I Am?</h2>
+            <p>
+                No system can guarantee that a review can never be connected to a specific person. Small schools,
+                unique roles, or very specific details can make it easier for someone to guess who wrote a review.
+            </p>
+            <p>
+                If you are worried about being identified, keep your review focused on <strong>experiences and patterns</strong>,
+                not on details that only one person would know.
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>Content Responsibility</h2>
+            <p>
+                All content on this site is user-submitted opinion. The site does not verify or endorse individual
+                reviews. Each reviewer is responsible for the statements they choose to share.
+            </p>
+            <p style="font-size: 14px; color:#555;">
+                If a formal moderation or “report review” process is added in the future, instructions on how to
+                request a review or removal of content will be posted here.
+            </p>
+        </div>
     </div>
 </body>
 </html>
