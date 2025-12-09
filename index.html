@@ -4,92 +4,137 @@
     <meta charset="UTF-8">
     <title>Rate My Principal</title>
     <style>
+        /* Base layout */
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 0;
+            padding: 0 0 40px 0;
             background: linear-gradient(to bottom right, #e9f1ff, #ffffff);
-        }
-        h1, p {
-            text-align: center;
-        }
-        form {
-            max-width: 500px;
-            margin: 20px auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            background-color: #ffffff;
-        }
-        label {
-            display: block;
-            margin-top: 10px;
-            font-weight: bold;
-        }
-        input[type="text"], select, textarea {
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        textarea {
-            min-height: 80px;
-        }
-        button {
-            margin-top: 15px;
-            padding: 10px 15px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
+            color: #222;
         }
 
-        /* Search + Sort Section */
-        .search-box {
+        .page-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px 20px 40px 20px;
+        }
+
+        /* Navigation */
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 10px 0 14px 0;
+            border-bottom: 1px solid #d0d7e2;
+            margin-bottom: 15px;
+        }
+        .nav a {
+            text-decoration: none;
+            color: #0056b3;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        .nav a:hover {
+            text-decoration: underline;
+        }
+
+        /* Headings & intro */
+        h1 {
+            text-align: center;
+            margin: 10px 0 6px 0;
+            color: #1f3b73;
+            letter-spacing: 0.03em;
+        }
+        h2 {
+            text-align: center;
+            margin-top: 24px;
+            color: #1f3b73;
+        }
+        .page-intro {
+            text-align: center;
+            margin: 0 auto 18px auto;
             max-width: 600px;
-            margin: 20px auto;
-            padding: 15px 18px;
+            font-size: 14px;
+            color: #444;
+        }
+
+        /* Cards / containers */
+        .card {
             background-color: #ffffff;
-            border-radius: 8px;
-            border: 1px solid #ccc;
+            border-radius: 10px;
+            border: 1px solid #d6d6d6;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+            padding: 16px 18px;
+            margin: 16px auto;
+        }
+
+        /* Search + sort section */
+        .search-box {
+            max-width: 100%;
+            margin-top: 10px;
         }
         .search-row {
             display: flex;
             flex-direction: column;
             gap: 10px;
         }
+        .search-row label {
+            font-weight: bold;
+            font-size: 14px;
+        }
+        #search-school {
+            width: 100%;
+            padding: 8px;
+            margin-top: 4px;
+            border-radius: 6px;
+            border: 1px solid #cbd2e0;
+            box-sizing: border-box;
+        }
+
         .sort-row {
             display: flex;
             align-items: center;
             gap: 8px;
-            font-size: 14px;
+            font-size: 13px;
             flex-wrap: wrap;
+            margin-top: 4px;
         }
         .sort-row select {
             width: auto;
             min-width: 160px;
-            padding: 5px;
-            font-size: 14px;
+            padding: 5px 8px;
+            border-radius: 6px;
+            border: 1px solid #cbd2e0;
+            font-size: 13px;
         }
 
+        /* Results area */
         #search-results {
-            max-width: 700px;
-            margin: 10px auto 30px auto;
+            margin-top: 14px;
+        }
+        .results-summary {
+            font-size: 13px;
+            color: #555;
+            margin: 0 0 8px 0;
         }
 
-        /* Grouped results */
         .review-group {
             background-color: #ffffff;
             border-radius: 10px;
             border: 1px solid #d6d6d6;
             padding: 14px 16px;
-            margin-bottom: 16px;
-            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+            margin-bottom: 12px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
+        .group-header h3 {
+            margin: 0 0 4px 0;
+            font-size: 17px;
+            color: #20324f;
+        }
+        .group-meta {
+            margin: 0;
+            font-size: 13px;
+            color: #555;
         }
         .avg-rating-pill {
             display: inline-block;
@@ -98,6 +143,13 @@
             background-color: #e3f2fd;
             font-weight: bold;
             margin-right: 6px;
+            font-size: 12px;
+        }
+
+        .reviews-list {
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid #eee;
         }
 
         .review-card {
@@ -107,7 +159,17 @@
         .review-card:last-child {
             border-bottom: none;
         }
+        .review-rating {
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+        .review-text {
+            font-size: 13px;
+            margin: 2px 0;
+        }
 
+        /* Report button */
         .review-actions {
             margin-top: 6px;
         }
@@ -120,7 +182,33 @@
             font-size: 12px;
             cursor: pointer;
         }
+        .report-btn:hover {
+            background-color: #b02a37;
+        }
 
+        /* Form styling */
+        form {
+            max-width: 520px;
+            margin: 10px auto 0 auto;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        input[type="text"], select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #cbd2e0;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        textarea {
+            min-height: 80px;
+        }
         .inline-row {
             display: flex;
             gap: 10px;
@@ -129,133 +217,149 @@
         .inline-row .field {
             flex: 1;
         }
-
-        .nav a {
-            text-decoration: none;
-            color: #0056b3;
-            font-weight: bold;
-            margin-right: 12px;
+        button {
+            margin-top: 15px;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
         }
-        .nav {
-            max-width: 800px;
-            margin: 0 auto 15px auto;
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Disclaimer + note */
+        .disclaimer {
+            max-width: 520px;
+            margin: 8px auto 10px auto;
+            background-color:#fff3cd;
+            padding:12px;
+            border:1px solid #ffeeba;
+            border-radius:6px;
+            font-size:13px;
+            color: #5c4700;
+        }
+        .form-note {
+            max-width: 520px;
+            margin: 4px auto 0 auto;
+            font-size: 12px;
+            color: #555;
             text-align: left;
         }
 
-        .form-note {
-            max-width: 500px;
-            margin: 0 auto;
-            font-size: 12px;
-            color: #555;
-        }
-
+        /* Responsive */
         @media (max-width: 600px) {
-            body {
-                margin: 10px;
+            .page-wrapper {
+                padding: 14px 14px 30px 14px;
             }
             .inline-row {
                 flex-direction: column;
-            }
-            .search-box {
-                margin: 10px auto;
-            }
-            form {
-                margin: 15px auto;
             }
         }
     </style>
 </head>
 <body>
+    <div class="page-wrapper">
 
-    <!-- NAVIGATION -->
-    <div class="nav">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="faq.html">FAQ</a>
-    </div>
+        <!-- NAVIGATION -->
+        <div class="nav">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="faq.html">FAQ</a>
+        </div>
 
-    <h1>Welcome to Rate My Principal</h1>
-    <p>This version is for teachers and school staff to share anonymous feedback about principals.</p>
+        <!-- HEADER -->
+        <h1>Rate My Principal</h1>
+        <p class="page-intro">
+            A space for teachers and school staff to share honest, anonymous feedback about principals
+            and school leadership.
+        </p>
 
-    <!-- SEARCH + SORT SECTION -->
-    <div class="search-box">
-        <div class="search-row">
-            <label for="search-school">Search for a School:</label>
-            <input type="text" id="search-school" placeholder="Enter school name...">
+        <!-- SEARCH + SORT SECTION -->
+        <div class="card search-box">
+            <div class="search-row">
+                <div>
+                    <label for="search-school">Search for a School:</label>
+                    <input type="text" id="search-school" placeholder="Start typing a school name...">
+                </div>
 
-            <div class="sort-row">
-                <span>Sort reviews by:</span>
-                <select id="sort-order">
-                    <option value="newest">Newest first</option>
-                    <option value="oldest">Oldest first</option>
-                    <option value="highest">Highest rating</option>
-                    <option value="lowest">Lowest rating</option>
+                <div class="sort-row">
+                    <span>Sort reviews by:</span>
+                    <select id="sort-order">
+                        <option value="newest">Newest first</option>
+                        <option value="oldest">Oldest first</option>
+                        <option value="highest">Highest rating</option>
+                        <option value="lowest">Lowest rating</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="search-results"></div>
+        </div>
+
+        <!-- DISCLAIMER -->
+        <div class="disclaimer">
+            <strong>Reminder:</strong> Please do not include any personal details that could identify you or others. 
+            Keep comments general and professional. Reviews are public and anonymous only if you keep them anonymous.
+        </div>
+
+        <!-- FORM CARD -->
+        <div class="card">
+            <h2>Submit a Review</h2>
+
+            <form id="review-form">
+
+                <label for="school-name">School Name:</label>
+                <input type="text" id="school-name" name="school" required>
+
+                <div class="inline-row">
+                    <div class="field">
+                        <label for="county">County:</label>
+                        <input type="text" id="county" name="county" required>
+                    </div>
+                    <div class="field">
+                        <label for="state">State:</label>
+                        <input type="text" id="state" name="state" required>
+                    </div>
+                </div>
+
+                <label for="principal-name">Principal Name:</label>
+                <input type="text" id="principal-name" name="principal" required>
+
+                <label for="rating">Rating (Letter Grade):</label>
+                <select id="rating" name="rating">
+                    <option value="A">A</option>
+                    <option value="B">B</option>
+                    <option value="C">C</option>
+                    <option value="D">D</option>
+                    <option value="F">F</option>
                 </select>
-            </div>
+
+                <label for="principal-comments">Comments about Principal:</label>
+                <textarea
+                    id="principal-comments"
+                    name="principal_comments"
+                    placeholder="For example: The principal communicates clearly, supports staff, and handles discipline fairly."
+                ></textarea>
+
+                <label for="school-comments">Comments about School:</label>
+                <textarea
+                    id="school-comments"
+                    name="school_comments"
+                    placeholder="For example: The school climate is positive, teachers are collaborative, but communication with families could improve."
+                ></textarea>
+
+                <button type="submit">Submit</button>
+            </form>
+
+            <p class="form-note">
+                Do not include teacher names, student names, or personal contact information in your review.
+            </p>
         </div>
     </div>
-
-    <div id="search-results"></div>
-
-    <!-- DISCLAIMER -->
-    <p style="max-width: 500px; margin: 0 auto 10px auto; 
-             background-color:#fff3cd; padding:12px; 
-             border:1px solid #ffeeba; border-radius:6px; font-size:14px;">
-        <strong>Reminder:</strong> Please do not include any personal details that could identify you or others. 
-        Keep comments general and professional. Reviews are public and anonymous only if you keep them anonymous.
-    </p>
-
-    <h2 style="text-align:center; margin-top:20px;">Submit a Review</h2>
-
-    <!-- FORM -->
-    <form id="review-form">
-
-        <label for="school-name">School Name:</label>
-        <input type="text" id="school-name" name="school" required>
-
-        <div class="inline-row">
-            <div class="field">
-                <label for="county">County:</label>
-                <input type="text" id="county" name="county" required>
-            </div>
-            <div class="field">
-                <label for="state">State:</label>
-                <input type="text" id="state" name="state" required>
-            </div>
-        </div>
-
-        <label for="principal-name">Principal Name:</label>
-        <input type="text" id="principal-name" name="principal" required>
-
-        <label for="rating">Rating (Letter Grade):</label>
-        <select id="rating" name="rating">
-            <option value="A">A</option>
-            <option value="B">B</option>
-            <option value="C">C</option>
-            <option value="D">D</option>
-            <option value="F">F</option>
-        </select>
-
-        <label for="principal-comments">Comments about Principal:</label>
-        <textarea
-            id="principal-comments"
-            name="principal_comments"
-            placeholder="For example: The principal communicates clearly and supports staff."
-        ></textarea>
-
-        <label for="school-comments">Comments about School:</label>
-        <textarea
-            id="school-comments"
-            name="school_comments"
-            placeholder="For example: The school climate is positive but communication with families could improve."
-        ></textarea>
-
-        <button type="submit">Submit</button>
-    </form>
-
-    <p class="form-note">
-        Do not include teacher names, student names, or personal contact information in your review.
-    </p>
 
     <!-- JAVASCRIPT -->
     <script>
@@ -286,8 +390,7 @@
 
         function averageLetter(ratingNums) {
             if (ratingNums.length === 0) return "N/A";
-            const avg =
-                ratingNums.reduce((sum, v) => sum + v, 0) / ratingNums.length;
+            const avg = ratingNums.reduce((sum, v) => sum + v, 0) / ratingNums.length;
 
             if (avg >= 3.5) return "A";
             if (avg >= 2.5) return "B";
