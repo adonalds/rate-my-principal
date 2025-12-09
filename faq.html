@@ -6,49 +6,74 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 0;
+            padding: 0 0 40px 0;
             background: linear-gradient(to bottom right, #e9f1ff, #ffffff);
+            color: #222;
+        }
+        .page-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
         }
         .nav {
-            max-width: 800px;
-            margin: 0 auto 15px auto;
-            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 10px 0 14px 0;
+            border-bottom: 1px solid #d0d7e2;
+            margin-bottom: 15px;
         }
         .nav a {
             margin-right: 12px;
             text-decoration: none;
             color: #0056b3;
             font-weight: bold;
+            font-size: 14px;
         }
-        h1, h2, p {
+        .nav a:hover {
+            text-decoration: underline;
+        }
+        h1 {
             max-width: 800px;
-            margin: 10px auto;
+            margin: 10px auto 8px auto;
+            text-align: center;
+            color: #1f3b73;
+            letter-spacing: 0.03em;
+        }
+        h2 {
+            margin-top: 0;
+            color: #1f3b73;
+        }
+        p {
+            max-width: 800px;
+            margin: 8px auto;
             line-height: 1.5;
         }
         .box {
             max-width: 800px;
-            margin: 20px auto;
+            margin: 18px auto;
             padding: 18px;
             background-color: #ffffff;
-            border-radius: 8px;
+            border-radius: 10px;
             border: 1px solid #ccc;
-        }
-        .box h2 {
-            margin-top: 0;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
         }
         ul {
             max-width: 800px;
-            margin: 10px auto;
+            margin: 8px auto 0 auto;
+            padding-left: 20px;
         }
 
-        /* Tips box like on Home page */
+        /* Tips box like on Home/About */
         .tips-box {
             max-width: 800px;
-            margin: 10px auto 20px auto;
-            padding: 14px 16px;
+            margin: 12px auto 18px auto;
+            padding: 16px 18px;
             background-color: #ffffff;
-            border-radius: 8px;
+            border-radius: 10px;
             border: 1px solid #cce5ff;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
             font-size: 14px;
         }
         .tips-box h2 {
@@ -57,87 +82,88 @@
             font-size: 18px;
         }
         .tips-box ul {
-            padding-left: 18px;
+            padding-left: 20px;
             margin: 6px 0 0 0;
         }
     </style>
 </head>
 <body>
+    <div class="page-wrapper">
 
-    <!-- NAVIGATION BAR -->
-    <div class="nav">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="faq.html">FAQ</a>
+        <!-- NAVIGATION BAR -->
+        <div class="nav">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="faq.html">FAQ</a>
+        </div>
+
+        <h1>Frequently Asked Questions</h1>
+
+        <!-- HOW TO WRITE A HELPFUL REVIEW -->
+        <div class="tips-box">
+            <h2>How do I write a helpful review?</h2>
+            <ul>
+                <li>Focus on patterns over time, not one really bad (or really great) day.</li>
+                <li>Talk about communication, support, fairness, and overall school climate.</li>
+                <li>Avoid personal attacks, threats, or naming teachers or students.</li>
+                <li>Share what it feels like to work under this principal, not private details.</li>
+            </ul>
+        </div>
+
+        <div class="box">
+            <h2>Who is this site for?</h2>
+            <p>
+                This version of Rate My Principal is designed for <strong>teachers and school staff</strong> 
+                to share their experiences working under specific principals.
+            </p>
+        </div>
+
+        <div class="box">
+            <h2>Are reviews anonymous?</h2>
+            <p>
+                Reviews are anonymous <strong>only if you keep them anonymous.</strong> 
+                Please do not include your name, obvious details that clearly identify you, 
+                or anything that could identify students.
+            </p>
+        </div>
+
+        <div class="box">
+            <h2>What should I include?</h2>
+            <ul>
+                <li>How the principal communicates with staff and families.</li>
+                <li>Whether staff feel supported, respected, and heard.</li>
+                <li>Fairness in discipline and decision-making.</li>
+                <li>Overall school climate and professional culture.</li>
+            </ul>
+        </div>
+
+        <div class="box">
+            <h2>What should I avoid?</h2>
+            <ul>
+                <li>Student names or identifying details.</li>
+                <li>Teacher or staff names (other than the principal).</li>
+                <li>Threats, slurs, or harassment.</li>
+                <li>Accusations of crimes or illegal activity.</li>
+                <li>Home addresses, phone numbers, or personal contact info.</li>
+            </ul>
+        </div>
+
+        <div class="box">
+            <h2>Can principals see these reviews?</h2>
+            <p>
+                Anyone who visits the site can see reviews. Please write as if the principal, 
+                your colleagues, and future educators might all read what you share.
+            </p>
+        </div>
+
+        <div class="box">
+            <h2>How do I report a review?</h2>
+            <p>
+                On the main page, each review has a <strong>“Report Review”</strong> button.  
+                You can briefly explain why you think it violates the guidelines.  
+                In a future version with moderation tools, this information would help flag reviews.
+            </p>
+        </div>
     </div>
-
-    <h1>Frequently Asked Questions</h1>
-
-    <!-- HOW TO WRITE A HELPFUL REVIEW (moved here too) -->
-    <div class="tips-box">
-        <h2>How do I write a helpful review?</h2>
-        <ul>
-            <li>Focus on patterns over time, not one really bad (or really great) day.</li>
-            <li>Talk about communication, support, fairness, and overall school climate.</li>
-            <li>Avoid personal attacks, threats, or naming teachers or students.</li>
-            <li>Share what it feels like to work under this principal, not private details.</li>
-        </ul>
-    </div>
-
-    <div class="box">
-        <h2>Who is this site for?</h2>
-        <p>
-            This version of Rate My Principal is designed for <strong>teachers and school staff</strong> 
-            to share their experiences working under specific principals.
-        </p>
-    </div>
-
-    <div class="box">
-        <h2>Are reviews anonymous?</h2>
-        <p>
-            Reviews are anonymous <strong>only if you keep them anonymous.</strong> 
-            Please do not include your name, obvious details that clearly identify you, 
-            or anything that could identify students.
-        </p>
-    </div>
-
-    <div class="box">
-        <h2>What should I include?</h2>
-        <ul>
-            <li>How the principal communicates with staff and families.</li>
-            <li>Whether staff feel supported and heard.</li>
-            <li>Fairness in discipline and decision-making.</li>
-            <li>Overall school climate and professional culture.</li>
-        </ul>
-    </div>
-
-    <div class="box">
-        <h2>What should I avoid?</h2>
-        <ul>
-            <li>Student names or identifying details.</li>
-            <li>Teacher or staff names (other than the principal).</li>
-            <li>Threats, slurs, or harassment.</li>
-            <li>Accusations of crimes or illegal activity.</li>
-            <li>Home addresses, phone numbers, or personal contact info.</li>
-        </ul>
-    </div>
-
-    <div class="box">
-        <h2>Can principals see these reviews?</h2>
-        <p>
-            Anyone who visits the site can see reviews. Please write as if the principal, 
-            your colleagues, and future educators might all read what you write.
-        </p>
-    </div>
-
-    <div class="box">
-        <h2>How do I report a review?</h2>
-        <p>
-            On the main page, each review has a <strong>“Report Review”</strong> button.  
-            You can briefly explain why you think it violates the guidelines.  
-            In a future version with moderation tools, this information would help flag reviews.
-        </p>
-    </div>
-
 </body>
 </html>
