@@ -51,9 +51,9 @@
 
         /* Search + Sort Section */
         .search-box {
-            max-width: 500px;
+            max-width: 600px;
             margin: 20px auto;
-            padding: 15px;
+            padding: 15px 18px;
             background-color: #ffffff;
             border-radius: 8px;
             border: 1px solid #ccc;
@@ -71,6 +71,7 @@
             align-items: center;
             gap: 8px;
             font-size: 14px;
+            flex-wrap: wrap;
         }
         .sort-row select {
             width: auto;
@@ -80,19 +81,63 @@
         }
 
         #search-results {
-            max-width: 500px;
-            margin: 10px auto;
-            padding: 10px;
-            background-color: #ffffff;
-            border-radius: 8px;
-            border: 1px solid #ccc;
+            max-width: 700px;
+            margin: 10px auto 30px auto;
         }
+
+        /* Grouped results */
+        .results-summary {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 10px;
+        }
+        .review-group {
+            background-color: #ffffff;
+            border-radius: 10px;
+            border: 1px solid #d6d6d6;
+            padding: 14px 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+        }
+        .group-header h3 {
+            margin: 0 0 4px 0;
+            font-size: 18px;
+        }
+        .group-meta {
+            margin: 0;
+            font-size: 13px;
+            color: #555;
+        }
+        .avg-rating-pill {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            background-color: #e3f2fd;
+            font-weight: bold;
+            margin-right: 6px;
+        }
+
+        .reviews-list {
+            margin-top: 10px;
+            padding-top: 8px;
+            border-top: 1px solid #eee;
+        }
+
         .review-card {
-            border-bottom: 1px solid #ddd;
             padding: 8px 0;
+            border-bottom: 1px solid #eee;
         }
         .review-card:last-child {
             border-bottom: none;
+        }
+        .review-rating {
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+        .review-text {
+            font-size: 14px;
+            margin: 2px 0;
         }
 
         /* Report button row */
@@ -134,6 +179,30 @@
             margin: 0 auto 15px auto;
             text-align: left;
         }
+
+        /* Small note under form */
+        .form-note {
+            max-width: 500px;
+            margin: 0 auto;
+            font-size: 12px;
+            color: #555;
+        }
+
+        /* Mobile tweaks */
+        @media (max-width: 600px) {
+            body {
+                margin: 10px;
+            }
+            .inline-row {
+                flex-direction: column;
+            }
+            .search-box {
+                margin: 10px auto;
+            }
+            form {
+                margin: 15px auto;
+            }
+        }
     </style>
 </head>
 <body>
@@ -146,7 +215,7 @@
     </div>
 
     <h1>Welcome to Rate My Principal</h1>
-    <p>This is a simple site to rate principals and schools.</p>
+    <p>This version is for teachers and school staff to share anonymous feedback about principals.</p>
 
     <!-- SEARCH + SORT SECTION -->
     <div class="search-box">
@@ -157,7 +226,7 @@
             </div>
 
             <div class="sort-row">
-                <span>Sort by:</span>
+                <span>Sort reviews by:</span>
                 <select id="sort-order">
                     <option value="newest">Newest first</option>
                     <option value="oldest">Oldest first</option>
@@ -226,9 +295,13 @@
         <button type="submit">Submit</button>
     </form>
 
+    <p class="form-note">
+        Do not include teacher names, student names, or personal contact information in your review.
+    </p>
+
     <!-- JAVASCRIPT -->
     <script>
-        // In-memory review storage
+        // In-memory review storage (resets on refresh)
         const reviews = [];
 
         const form = document.getElementById('review-form');
@@ -242,9 +315,9 @@
             const sorted = [...list];
 
             if (sortOption === 'newest') {
-                sorted.sort((a, b) => b.createdAt - a.createdAt);
+                sorted.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
             } else if (sortOption === 'oldest') {
-                sorted.sort((a, b) => a.createdAt - b.createdAt);
+                sorted.sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0));
             } else if (sortOption === 'highest') {
                 sorted.sort((a, b) => (ratingValue[b.rating] || 0) - (ratingValue[a.rating] || 0));
             } else if (sortOption === 'lowest') {
@@ -252,6 +325,35 @@
             }
 
             return sorted;
+        }
+
+        function averageLetter(ratingNums) {
+            if (ratingNums.length === 0) return "N/A";
+            const avg =
+                ratingNums.reduce((sum, v) => sum + v, 0) / ratingNums.length;
+
+            if (avg >= 3.5) return "A";
+            if (avg >= 2.5) return "B";
+            if (avg >= 1.5) return "C";
+            if (avg >= 0.5) return "D";
+            return "F";
+        }
+
+        function groupReviewsBySchool(list) {
+            const groups = {};
+            list.forEach(review => {
+                const schoolKey = `${review.school}|||${review.county}|||${review.state}`;
+                if (!groups[schoolKey]) {
+                    groups[schoolKey] = {
+                        school: review.school,
+                        county: review.county,
+                        state: review.state,
+                        reviews: []
+                    };
+                }
+                groups[schoolKey].reviews.push(review);
+            });
+            return Object.values(groups);
         }
 
         function renderResults(list, query) {
@@ -263,24 +365,98 @@
                 return;
             }
 
-            const sorted = sortReviews(list, sortSelect.value);
+            const grouped = groupReviewsBySchool(list);
+            const totalReviews = list.length;
+            const totalSchools = grouped.length;
 
-            sorted.forEach(review => {
-                const div = document.createElement('div');
-                div.className = "review-card";
-                div.innerHTML = `
-                    <h3>${review.school} (${review.county}, ${review.state})</h3>
-                    <p><strong>Principal:</strong> ${review.principal}</p>
-                    <p><strong>Rating:</strong> ${review.rating}</p>
-                    <p><strong>Comments about Principal:</strong> ${review.principalComments || "N/A"}</p>
-                    <p><strong>Comments about School:</strong> ${review.schoolComments || "N/A"}</p>
-                    <div class="review-actions">
+            // Summary line
+            const summary = document.createElement('p');
+            summary.className = "results-summary";
+            summary.textContent =
+                `Found ${totalReviews} review${totalReviews !== 1 ? "s" : ""} ` +
+                `across ${totalSchools} school${totalSchools !== 1 ? "s" : ""}.`;
+            resultsDiv.appendChild(summary);
+
+            // Sort schools alphabetically by name
+            grouped.sort((a, b) => a.school.localeCompare(b.school));
+
+            const sortOption = sortSelect.value;
+
+            grouped.forEach(group => {
+                const groupReviews = sortReviews(group.reviews, sortOption);
+                const ratingNums = groupReviews.map(r => ratingValue[r.rating] || 0);
+                const avgLetterGrade = averageLetter(ratingNums);
+
+                const groupDiv = document.createElement('div');
+                groupDiv.className = "review-group";
+
+                const headerDiv = document.createElement('div');
+                headerDiv.className = "group-header";
+
+                const title = document.createElement('h3');
+                title.textContent = `${group.school} (${group.county}, ${group.state})`;
+
+                const meta = document.createElement('p');
+                meta.className = "group-meta";
+                const countText =
+                    `${groupReviews.length} review${groupReviews.length !== 1 ? "s" : ""}`;
+
+                meta.innerHTML = `
+                    <span class="avg-rating-pill">${avgLetterGrade}</span>
+                    <span>${countText}</span>
+                `;
+
+                headerDiv.appendChild(title);
+                headerDiv.appendChild(meta);
+                groupDiv.appendChild(headerDiv);
+
+                const reviewsList = document.createElement('div');
+                reviewsList.className = "reviews-list";
+
+                groupReviews.forEach(review => {
+                    const card = document.createElement('div');
+                    card.className = "review-card";
+
+                    const ratingLine = document.createElement('div');
+                    ratingLine.className = "review-rating";
+                    ratingLine.textContent = `Rating: ${review.rating}`;
+
+                    const principalLine = document.createElement('p');
+                    principalLine.className = "review-text";
+                    principalLine.innerHTML =
+                        `<strong>Principal:</strong> ${review.principal}`;
+
+                    const principalComments = document.createElement('p');
+                    principalComments.className = "review-text";
+                    principalComments.innerHTML =
+                        `<strong>Comments about Principal:</strong> ` +
+                        `${review.principalComments || "N/A"}`;
+
+                    const schoolComments = document.createElement('p');
+                    schoolComments.className = "review-text";
+                    schoolComments.innerHTML =
+                        `<strong>Comments about School:</strong> ` +
+                        `${review.schoolComments || "N/A"}`;
+
+                    const actions = document.createElement('div');
+                    actions.className = "review-actions";
+                    actions.innerHTML = `
                         <button type="button" class="report-btn" data-school="${review.school}">
                             Report Review
                         </button>
-                    </div>
-                `;
-                resultsDiv.appendChild(div);
+                    `;
+
+                    card.appendChild(ratingLine);
+                    card.appendChild(principalLine);
+                    card.appendChild(principalComments);
+                    card.appendChild(schoolComments);
+                    card.appendChild(actions);
+
+                    reviewsList.appendChild(card);
+                });
+
+                groupDiv.appendChild(reviewsList);
+                resultsDiv.appendChild(groupDiv);
             });
         }
 
@@ -344,7 +520,7 @@
                 if (reason && reason.trim() !== "") {
                     alert(
                         "Thank you. Reporting is not fully active yet, " +
-                        "but this information would be used in a future version to flag reviews for review."
+                        "but this information would be used in a future version to flag reviews."
                     );
                 } else {
                     alert("Report cancelled. No information was submitted.");
