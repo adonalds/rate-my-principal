@@ -6,88 +6,130 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
+            margin: 0;
+            padding: 0 0 40px 0;
             background: linear-gradient(to bottom right, #e9f1ff, #ffffff);
+            color: #222;
+        }
+        .page-wrapper {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
         }
         .nav {
-            max-width: 800px;
-            margin: 0 auto 15px auto;
-            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 10px 0 14px 0;
+            border-bottom: 1px solid #d0d7e2;
+            margin-bottom: 15px;
         }
         .nav a {
             margin-right: 12px;
             text-decoration: none;
             color: #0056b3;
             font-weight: bold;
+            font-size: 14px;
         }
-        h1, h2, p {
+        .nav a:hover {
+            text-decoration: underline;
+        }
+        h1 {
             max-width: 800px;
-            margin: 10px auto;
+            margin: 10px auto 8px auto;
+            text-align: center;
+            color: #1f3b73;
+            letter-spacing: 0.03em;
+        }
+        h2 {
+            margin-top: 0;
+            color: #1f3b73;
+        }
+        p {
+            max-width: 800px;
+            margin: 8px auto;
             line-height: 1.5;
         }
         .box {
             max-width: 800px;
-            margin: 20px auto;
+            margin: 18px auto;
             padding: 18px;
             background-color: #ffffff;
-            border-radius: 8px;
+            border-radius: 10px;
             border: 1px solid #ccc;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
         }
         ul {
             max-width: 800px;
-            margin: 10px auto;
+            margin: 8px auto 0 auto;
+            padding-left: 20px;
         }
     </style>
 </head>
 <body>
+    <div class="page-wrapper">
 
-    <!-- NAVIGATION BAR -->
-    <div class="nav">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="faq.html">FAQ</a>
+        <!-- NAVIGATION BAR -->
+        <div class="nav">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="faq.html">FAQ</a>
+        </div>
+
+        <h1>About Rate My Principal</h1>
+
+        <div class="box">
+            <p>
+                <strong>Rate My Principal</strong> was created as a place for teachers and school staff
+                to share honest feedback about school leadership and school culture.
+            </p>
+            <p>
+                The goal is to provide transparency, encourage improvement, and help educators better
+                understand what it is like to work at a particular school under a particular principal.
+                This site is for educators — not students and not for rating classroom teachers.
+            </p>
+            <p>
+                Reviews are anonymous as long as you avoid including personal identifying details 
+                about yourself or anyone else. Please keep comments professional, respectful, and 
+                focused on school leadership and school environment.
+            </p>
+        </div>
+
+        <h2 style="max-width:800px;margin:16px auto 4px auto;">Safety & Privacy Reminder</h2>
+        <div class="box">
+            <p>To protect everyone’s privacy and safety, please <strong>do not</strong> include:</p>
+            <ul>
+                <li>Student names or obvious identifying details</li>
+                <li>Your own name or anything that clearly reveals who you are</li>
+                <li>Teacher or staff names (this site is for principals only)</li>
+                <li>Specific incidents that make it clear exactly who wrote the review</li>
+                <li>Phone numbers, email addresses, or home addresses</li>
+            </ul>
+            <p style="margin-top:10px;">
+                In the future, if moderation tools are added, reviews that clearly violate these
+                guidelines may be removed.
+            </p>
+        </div>
+
+        <h2 style="max-width:800px;margin:16px auto 4px auto;">Contact</h2>
+        <div class="box">
+            <p>
+                If you have questions, concerns, feedback, or need to report an inappropriate review, 
+                you can reach out here:
+            </p>
+
+            <p style="font-size: 16px; font-weight: bold; margin-top:10px;">
+                📧 Email: 
+                <a href="mailto:yourfutureemail@example.com">
+                    yourfutureemail@example.com
+                </a>
+            </p>
+
+            <p style="color: #555; margin-top:8px;">
+                Please avoid sending any personal identifying information about teachers, staff, or students
+                in your message.
+            </p>
+        </div>
     </div>
-
-    <h1>About Rate My Principal</h1>
-
-    <div class="box">
-        <p>
-            Rate My Principal was created to give teachers and school staff a simple, honest way 
-            to share feedback about school leadership and school culture.
-        </p>
-        <p>
-            The goal is to provide transparency, encourage improvement, and help educators better
-            understand what it is like to work at a particular school under a particular principal.
-        </p>
-        <p>
-            Reviews are anonymous as long as you avoid including personal identifying details 
-            about yourself or anyone else. Please keep comments professional, respectful, and 
-            focused on school leadership or school environment — never individuals other than 
-            the principal.
-        </p>
-    </div>
-
-    <h2>Safety & Privacy Reminder</h2>
-    <div class="box">
-        <p>To protect everyone’s privacy and safety, please DO NOT include:</p>
-        <ul>
-            <li>Student names</li>
-            <li>Your own name or any identifying details</li>
-            <li>Teacher names (this site is <strong>for reviewing principals only</strong>)</li>
-            <li>Specific incidents that clearly reveal who you are</li>
-            <li>Phone numbers, email addresses, or home addresses</li>
-        </ul>
-        <p>
-            Reviews that clearly violate these guidelines may be removed in the future
-            if moderation tools are added.
-        </p>
-    </div>
-
-    <h2>Contact Us</h2>
-    <div class="box">
-        <p>
-            If you have questions, concerns, feedback, or need to report an inappropriate review, 
-            you can reach us at:
-        </p>
-
-        <p style
+</body>
+</html>
