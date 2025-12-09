@@ -2,142 +2,562 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>FAQ • Rate My Principal</title>
+    <title>Rate My Principal</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
             background: linear-gradient(to bottom right, #e9f1ff, #ffffff);
         }
+        h1, p {
+            text-align: center;
+        }
+        form {
+            max-width: 500px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #ffffff;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+        input[type="text"], select, textarea {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        textarea {
+            min-height: 80px;
+        }
+        button {
+            margin-top: 15px;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Search + Sort Section */
+        .search-box {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 15px 18px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+        .search-row {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .search-row label {
+            margin-top: 0;
+        }
+        .sort-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            flex-wrap: wrap;
+        }
+        .sort-row select {
+            width: auto;
+            min-width: 160px;
+            padding: 5px;
+            font-size: 14px;
+        }
+
+        #search-results {
+            max-width: 700px;
+            margin: 10px auto 30px auto;
+        }
+
+        /* Grouped results */
+        .results-summary {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 10px;
+        }
+        .review-group {
+            background-color: #ffffff;
+            border-radius: 10px;
+            border: 1px solid #d6d6d6;
+            padding: 14px 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+        }
+        .group-header h3 {
+            margin: 0 0 4px 0;
+            font-size: 18px;
+        }
+        .group-meta {
+            margin: 0;
+            font-size: 13px;
+            color: #555;
+        }
+        .avg-rating-pill {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            background-color: #e3f2fd;
+            font-weight: bold;
+            margin-right: 6px;
+        }
+
+        .reviews-list {
+            margin-top: 10px;
+            padding-top: 8px;
+            border-top: 1px solid #eee;
+        }
+
+        .review-card {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .review-card:last-child {
+            border-bottom: none;
+        }
+        .review-rating {
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+        .review-text {
+            font-size: 14px;
+            margin: 2px 0;
+        }
+
+        /* Report button row */
+        .review-actions {
+            margin-top: 6px;
+        }
+        .report-btn {
+            background-color: #dc3545;
+            color: #ffffff;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        .report-btn:hover {
+            background-color: #b02a37;
+        }
+
+        /* County/State inline layout */
+        .inline-row {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .inline-row .field {
+            flex: 1;
+        }
+
+        /* Navigation Bar */
+        .nav a {
+            text-decoration: none;
+            color: #0056b3;
+            font-weight: bold;
+            margin-right: 12px;
+        }
         .nav {
             max-width: 800px;
             margin: 0 auto 15px auto;
             text-align: left;
         }
-        .nav a {
-            margin-right: 12px;
-            text-decoration: none;
-            color: #0056b3;
-            font-weight: bold;
-        }
-        .page-container {
-            max-width: 800px;
+
+        /* Small note under form */
+        .form-note {
+            max-width: 500px;
             margin: 0 auto;
+            font-size: 12px;
+            color: #555;
         }
-        .box {
+
+        /* Tips box: how to write a helpful review */
+        .tips-box {
+            max-width: 600px;
+            margin: 10px auto 20px auto;
+            padding: 14px 16px;
             background-color: #ffffff;
             border-radius: 8px;
-            border: 1px solid #ccc;
-            padding: 18px;
-            margin-bottom: 16px;
+            border: 1px solid #cce5ff;
+            font-size: 14px;
         }
-        h1, h2, h3 {
+        .tips-box h3 {
             margin-top: 0;
-        }
-        p, li {
-            line-height: 1.5;
-        }
-        .faq-item h3 {
             margin-bottom: 6px;
+            font-size: 16px;
+        }
+        .tips-box ul {
+            padding-left: 18px;
+            margin: 6px 0 0 0;
+        }
+
+        /* Mobile tweaks */
+        @media (max-width: 600px) {
+            body {
+                margin: 10px;
+            }
+            .inline-row {
+                flex-direction: column;
+            }
+            .search-box {
+                margin: 10px auto;
+            }
+            form {
+                margin: 15px auto;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- NAVIGATION BAR -->
+    <!-- NAVIGATION -->
     <div class="nav">
         <a href="index.html">Home</a>
         <a href="about.html">About</a>
         <a href="faq.html">FAQ</a>
     </div>
 
-    <div class="page-container">
-        <h1>Frequently Asked Questions</h1>
+    <h1>Welcome to Rate My Principal</h1>
+    <p>This version is for teachers and school staff to share anonymous feedback about principals.</p>
 
-        <div class="box faq-item">
-            <h3>Who is this site for?</h3>
-            <p>
-                This site is mainly for <strong>teachers and school staff</strong> who want to share
-                honest feedback about principals and school climate. A separate space for parents
-                may be added in the future.
-            </p>
-        </div>
+    <!-- SEARCH + SORT SECTION -->
+    <div class="search-box">
+        <div class="search-row">
+            <div>
+                <label for="search-school">Search for a School:</label>
+                <input type="text" id="search-school" placeholder="Enter school name...">
+            </div>
 
-        <div class="box faq-item">
-            <h3>Are reviews really anonymous?</h3>
-            <p>
-                The site does not ask for your name or email. However, your review can still identify you
-                if you include details that clearly point to one person (for example, “the only 7th grade
-                art teacher at this school”). To stay more anonymous, keep your comments general and avoid
-                describing yourself in a way that only one person fits.
-            </p>
-        </div>
-
-        <div class="box faq-item">
-            <h3>Can principals see these reviews?</h3>
-            <p>
-                Anyone with the link can view reviews, including principals, staff, and the public.
-                Write as if your review could eventually be seen by anyone at the school.
-            </p>
-        </div>
-
-        <div class="box faq-item">
-            <h3>Can I mention my principal by name?</h3>
-            <p>
-                Yes — the review is specifically about your principal and the school. However, please
-                avoid naming <strong>other</strong> teachers, staff, students, or families in your comments.
-            </p>
-        </div>
-
-        <div class="box faq-item">
-            <h3>What should I include in my review?</h3>
-            <p>Helpful reviews focus on overall patterns and experiences, such as:</p>
-            <ul>
-                <li>Communication style of the principal</li>
-                <li>Support for staff and classroom decisions</li>
-                <li>School climate and staff morale</li>
-                <li>How decisions are made and shared</li>
-            </ul>
-        </div>
-
-        <div class="box faq-item">
-            <h3>What should I avoid including?</h3>
-            <p>Please avoid:</p>
-            <ul>
-                <li>Threats, harassment, or abusive language</li>
-                <li>Slurs or hate speech</li>
-                <li>Accusations of crimes or illegal activity</li>
-                <li>Names of teachers, staff, students, or families who are not the principal</li>
-                <li>Personal contact information (phone numbers, emails, addresses, etc.)</li>
-            </ul>
-        </div>
-
-        <div class="box faq-item">
-            <h3>Can I edit or delete a review after posting it?</h3>
-            <p>
-                In this early version, there is no automatic way for users to edit or delete reviews.
-                As the site grows and moderation tools are added, a process for requesting changes or removal
-                may be added and explained here.
-            </p>
-        </div>
-
-        <div class="box faq-item">
-            <h3>Is this an official rating from the district or state?</h3>
-            <p>
-                No. This site is not affiliated with any school district, government agency, or official
-                rating system. All content is user-submitted opinion.
-            </p>
-        </div>
-
-        <div class="box faq-item">
-            <h3>What if I see a review that crosses the line?</h3>
-            <p>
-                A “Report review” button may be added to each review so users can flag content that violates
-                the guidelines. Until then, you can reach out using the contact information on the About page
-                if something is clearly abusive or unsafe.
-            </p>
+            <div class="sort-row">
+                <span>Sort reviews by:</span>
+                <select id="sort-order">
+                    <option value="newest">Newest first</option>
+                    <option value="oldest">Oldest first</option>
+                    <option value="highest">Highest rating</option>
+                    <option value="lowest">Lowest rating</option>
+                </select>
+            </div>
         </div>
     </div>
 
+    <div id="search-results"></div>
+
+    <!-- DISCLAIMER -->
+    <p style="max-width: 500px; margin: 0 auto 10px auto; 
+             background-color:#fff3cd; padding:12px; 
+             border:1px solid #ffeeba; border-radius:6px; font-size:14px;">
+        <strong>Reminder:</strong> Please do not include any personal details that could identify you or others. 
+        Keep comments general and professional. Reviews are public and anonymous only if you keep them anonymous.
+    </p>
+
+    <!-- HOW TO WRITE A HELPFUL REVIEW -->
+    <div class="tips-box">
+        <h3>How to write a helpful review</h3>
+        <ul>
+            <li>Focus on patterns over time, not one bad (or great) day.</li>
+            <li>Talk about communication, support, fairness, and school climate.</li>
+            <li>Avoid personal attacks, threats, or naming teachers or students.</li>
+            <li>Share what it feels like to work under this principal, not private details.</li>
+        </ul>
+    </div>
+
+    <h2 style="text-align:center; margin-top:20px;">Submit a Review</h2>
+
+    <!-- FORM -->
+    <form id="review-form">
+
+        <label for="school-name">School Name:</label>
+        <input type="text" id="school-name" name="school" required>
+
+        <div class="inline-row">
+            <div class="field">
+                <label for="county">County:</label>
+                <input type="text" id="county" name="county" required>
+            </div>
+            <div class="field">
+                <label for="state">State:</label>
+                <input type="text" id="state" name="state" required>
+            </div>
+        </div>
+
+        <label for="principal-name">Principal Name:</label>
+        <input type="text" id="principal-name" name="principal" required>
+
+        <label for="rating">Rating (Letter Grade):</label>
+        <select id="rating" name="rating">
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+            <option value="F">F</option>
+        </select>
+
+        <label for="principal-comments">Comments about Principal:</label>
+        <textarea
+            id="principal-comments"
+            name="principal_comments"
+            placeholder="For example: The principal is very supportive, communicates clearly, and handles discipline fairly."
+        ></textarea>
+
+        <label for="school-comments">Comments about School:</label>
+        <textarea
+            id="school-comments"
+            name="school_comments"
+            placeholder="For example: The school climate is positive, teachers are collaborative, but communication with families could improve."
+        ></textarea>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <p class="form-note">
+        Do not include teacher names, student names, or personal contact information in your review.
+    </p>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // In-memory review storage (resets on refresh)
+        const reviews = [];
+
+        const form = document.getElementById('review-form');
+        const searchInput = document.getElementById('search-school');
+        const sortSelect = document.getElementById('sort-order');
+        const resultsDiv = document.getElementById('search-results');
+
+        const ratingValue = { A: 4, B: 3, C: 2, D: 1, F: 0 };
+
+        function sortReviews(list, sortOption) {
+            const sorted = [...list];
+
+            if (sortOption === 'newest') {
+                sorted.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+            } else if (sortOption === 'oldest') {
+                sorted.sort((a, b) => (a.createdAt || 0) - (b.createdAt || 0));
+            } else if (sortOption === 'highest') {
+                sorted.sort((a, b) => (ratingValue[b.rating] || 0) - (ratingValue[a.rating] || 0));
+            } else if (sortOption === 'lowest') {
+                sorted.sort((a, b) => (ratingValue[a.rating] || 0) - (ratingValue[b.rating] || 0));
+            }
+
+            return sorted;
+        }
+
+        function averageLetter(ratingNums) {
+            if (ratingNums.length === 0) return "N/A";
+            const avg =
+                ratingNums.reduce((sum, v) => sum + v, 0) / ratingNums.length;
+
+            if (avg >= 3.5) return "A";
+            if (avg >= 2.5) return "B";
+            if (avg >= 1.5) return "C";
+            if (avg >= 0.5) return "D";
+            return "F";
+        }
+
+        function groupReviewsBySchool(list) {
+            const groups = {};
+            list.forEach(review => {
+                const schoolKey = `${review.school}|||${review.county}|||${review.state}`;
+                if (!groups[schoolKey]) {
+                    groups[schoolKey] = {
+                        school: review.school,
+                        county: review.county,
+                        state: review.state,
+                        reviews: []
+                    };
+                }
+                groups[schoolKey].reviews.push(review);
+            });
+            return Object.values(groups);
+        }
+
+        function renderResults(list, query) {
+            resultsDiv.innerHTML = "";
+            if (!query || query.trim() === "") return;
+
+            if (list.length === 0) {
+                resultsDiv.innerHTML = "<p>No reviews found for that school yet.</p>";
+                return;
+            }
+
+            const grouped = groupReviewsBySchool(list);
+            const totalReviews = list.length;
+            const totalSchools = grouped.length;
+
+            // Summary line
+            const summary = document.createElement('p');
+            summary.className = "results-summary";
+            summary.textContent =
+                `Found ${totalReviews} review${totalReviews !== 1 ? "s" : ""} ` +
+                `across ${totalSchools} school${totalSchools !== 1 ? "s" : ""}.`;
+            resultsDiv.appendChild(summary);
+
+            // Sort schools alphabetically by name
+            grouped.sort((a, b) => a.school.localeCompare(b.school));
+
+            const sortOption = sortSelect.value;
+
+            grouped.forEach(group => {
+                const groupReviews = sortReviews(group.reviews, sortOption);
+                const ratingNums = groupReviews.map(r => ratingValue[r.rating] || 0);
+                const avgLetterGrade = averageLetter(ratingNums);
+
+                const groupDiv = document.createElement('div');
+                groupDiv.className = "review-group";
+
+                const headerDiv = document.createElement('div');
+                headerDiv.className = "group-header";
+
+                const title = document.createElement('h3');
+                title.textContent = `${group.school} (${group.county}, ${group.state})`;
+
+                const meta = document.createElement('p');
+                meta.className = "group-meta";
+                const countText =
+                    `${groupReviews.length} review${groupReviews.length !== 1 ? "s" : ""}`;
+
+                meta.innerHTML = `
+                    <span class="avg-rating-pill">${avgLetterGrade}</span>
+                    <span>${countText}</span>
+                `;
+
+                headerDiv.appendChild(title);
+                headerDiv.appendChild(meta);
+                groupDiv.appendChild(headerDiv);
+
+                const reviewsList = document.createElement('div');
+                reviewsList.className = "reviews-list";
+
+                groupReviews.forEach(review => {
+                    const card = document.createElement('div');
+                    card.className = "review-card";
+
+                    const ratingLine = document.createElement('div');
+                    ratingLine.className = "review-rating";
+                    ratingLine.textContent = `Rating: ${review.rating}`;
+
+                    const principalLine = document.createElement('p');
+                    principalLine.className = "review-text";
+                    principalLine.innerHTML =
+                        `<strong>Principal:</strong> ${review.principal}`;
+
+                    const principalComments = document.createElement('p');
+                    principalComments.className = "review-text";
+                    principalComments.innerHTML =
+                        `<strong>Comments about Principal:</strong> ` +
+                        `${review.principalComments || "N/A"}`;
+
+                    const schoolComments = document.createElement('p');
+                    schoolComments.className = "review-text";
+                    schoolComments.innerHTML =
+                        `<strong>Comments about School:</strong> ` +
+                        `${review.schoolComments || "N/A"}`;
+
+                    const actions = document.createElement('div');
+                    actions.className = "review-actions";
+                    actions.innerHTML = `
+                        <button type="button" class="report-btn" data-school="${review.school}">
+                            Report Review
+                        </button>
+                    `;
+
+                    card.appendChild(ratingLine);
+                    card.appendChild(principalLine);
+                    card.appendChild(principalComments);
+                    card.appendChild(schoolComments);
+                    card.appendChild(actions);
+
+                    reviewsList.appendChild(card);
+                });
+
+                groupDiv.appendChild(reviewsList);
+                resultsDiv.appendChild(groupDiv);
+            });
+        }
+
+        function updateResults() {
+            const query = searchInput.value.toLowerCase().trim();
+            const filtered = reviews.filter(review =>
+                review.school.toLowerCase().includes(query)
+            );
+            renderResults(filtered, query);
+        }
+
+        // Search input
+        searchInput.addEventListener('input', updateResults);
+
+        // Sort change
+        sortSelect.addEventListener('change', updateResults);
+
+        // Form submission (add review)
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const school = document.getElementById('school-name').value.trim();
+            const county = document.getElementById('county').value.trim();
+            const state = document.getElementById('state').value.trim();
+            const principal = document.getElementById('principal-name').value.trim();
+            const rating = document.getElementById('rating').value;
+            const principalComments = document.getElementById('principal-comments').value.trim();
+            const schoolComments = document.getElementById('school-comments').value.trim();
+
+            if (!school || !principal) {
+                alert("Please fill in at least the school name and principal name.");
+                return;
+            }
+
+            reviews.push({
+                school,
+                county,
+                state,
+                principal,
+                rating,
+                principalComments,
+                schoolComments,
+                createdAt: Date.now()
+            });
+
+            form.reset();
+            alert("Thank you for your review!");
+
+            updateResults();
+        });
+
+        // Report Review click handler
+        resultsDiv.addEventListener('click', function (event) {
+            if (event.target.classList.contains('report-btn')) {
+                const schoolName = event.target.getAttribute('data-school') || "this school";
+                const reason = prompt(
+                    `You are reporting a review for ${schoolName}.\n\n` +
+                    "Briefly explain why you are reporting this review:"
+                );
+
+                if (reason && reason.trim() !== "") {
+                    alert(
+                        "Thank you. Reporting is not fully active yet, " +
+                        "but this information would be used in a future version to flag reviews."
+                    );
+                } else {
+                    alert("Report cancelled. No information was submitted.");
+                }
+            }
+        });
+    </script>
 </body>
 </html>
